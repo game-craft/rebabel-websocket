@@ -18,10 +18,9 @@ rebabel-websocket
  |   |   └──database
  |   |       ├──example_repository.go
  |   |       └──sqlhandler.go
- |   ├──usecase(Use cases)
- |   |   ├──example_interactor.go
- |   |   └──example_repository.go
- |   └──server.go
+ |   └──usecase(Usecases)
+ |       ├──example_interactor.go
+ |       └──example_repository.go
  ├──docker
  |   └──go
  |      └──Dockerfile
@@ -35,6 +34,7 @@ rebabel-websocket
  ├──docker-compose.yaml
  ├──go.mod
  ├──go.sum
+ ├──main.go
  └──README.md
 ```
 ## 環境構築
