@@ -8,7 +8,7 @@ WORKDIR ${ROOT}
 ENV GO111MODULE=on
 
 COPY . .
-EXPOSE 8001
+EXPOSE 8000
 
 RUN go mod init docker-echo-template && go mod tidy
 RUN apk upgrade --update && apk add bash && apk --no-cache add git

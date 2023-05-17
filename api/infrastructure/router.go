@@ -31,5 +31,5 @@ func Init() {
 	// position
 	e.GET("/room_position/:roomId", func(c echo.Context) error { return positionController.RoomPosition(c) })
 
-	e.Logger.Fatal(e.Start(":8001"))
+	e.Logger.Fatal(e.Start(":8000"))
 }
