@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 	"github.com/labstack/echo"
 	"github.com/gorilla/websocket"
 
+	"docker-echo-template/api/domain"
 	"docker-echo-template/api/interfaces/database"
 	"docker-echo-template/api/usecase"
 )
@@ -34,6 +36,7 @@ func NewChatController(sqlHandler database.SqlHandler) *ChatController {
 
 func (controller *ChatController) WorldChat(c echo.Context) (err error) {
 	world := c.Param("worldsId")
+	worldId, _ := strconv.Atoi(world)
 	conn, err := worldChatUpgrader.Upgrade(c.Response(), c.Request(), nil)
 	if err != nil {
 		return c.JSON(500, NewError(err))
@@ -54,6 +57,7 @@ func (controller *ChatController) WorldChat(c echo.Context) (err error) {
 		}
 
 		message := string(p)
+		go controller.addChatRecord(c, worldId, message)
 
 		for client := range worldChat[world] {
 			err := client.WriteMessage(messageType, []byte(message))
@@ -62,4 +66,12 @@ func (controller *ChatController) WorldChat(c echo.Context) (err error) {
 			}
 		}
 	}
+}
+
+func (controller *ChatController) addChatRecord(c echo.Context, worldId int, message string) {
+	u := domain.Chat{}
+	c.Bind(&u)
+	u.WorldsId = worldId
+	u.ChatsContent = message
+	controller.Interactor.Add(u)
 }
