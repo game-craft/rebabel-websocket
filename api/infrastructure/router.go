@@ -10,7 +10,6 @@ import (
 func Init() {
 	userController := controllers.NewUserController(NewSqlHandler())
 	chatController := controllers.NewChatController(NewSqlHandler())
-	positionController := controllers.NewPositionController(NewSqlHandler())
 
 	e := echo.New()
 	
@@ -27,9 +26,6 @@ func Init() {
 
 	// chat
 	e.GET("/room_chat/:roomId", func(c echo.Context) error { return chatController.RoomChat(c) })
-
-	// position
-	e.GET("/room_position/:roomId", func(c echo.Context) error { return positionController.RoomPosition(c) })
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
