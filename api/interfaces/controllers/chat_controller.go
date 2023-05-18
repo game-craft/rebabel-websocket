@@ -14,8 +14,8 @@ type ChatController struct {
 }
 
 var (
-	roomChat = make(map[string]map[*websocket.Conn]bool)
-	roomChatUpgrader = websocket.Upgrader{
+	worldChat = make(map[string]map[*websocket.Conn]bool)
+	worldChatUpgrader = websocket.Upgrader{
 		ReadBufferSize: 1024,
 		WriteBufferSize: 1024,
 		CheckOrigin: func(r *http.Request) bool { return true },
@@ -32,33 +32,33 @@ func NewChatController(sqlHandler database.SqlHandler) *ChatController {
 	}
 }
 
-func (controller *ChatController) RoomChat(c echo.Context) (err error) {
-	room := c.Param("roomId")
-	conn, err := roomChatUpgrader.Upgrade(c.Response(), c.Request(), nil)
+func (controller *ChatController) WorldChat(c echo.Context) (err error) {
+	world := c.Param("worldsId")
+	conn, err := worldChatUpgrader.Upgrade(c.Response(), c.Request(), nil)
 	if err != nil {
 		return c.JSON(500, NewError(err))
 	}
 
-	if roomChat[room] == nil {
-		roomChat[room] = make(map[*websocket.Conn]bool)
+	if worldChat[world] == nil {
+		worldChat[world] = make(map[*websocket.Conn]bool)
 	}
 
-	roomChat[room][conn] = true
+	worldChat[world][conn] = true
 
 	for {
 		messageType, p, err := conn.ReadMessage()
 		if err != nil {
-			delete(roomChat[room], conn)
+			delete(worldChat[world], conn)
 
 			return c.JSON(500, NewError(err))
 		}
 
 		message := string(p)
 
-		for client := range roomChat[room] {
+		for client := range worldChat[world] {
 			err := client.WriteMessage(messageType, []byte(message))
 			if err != nil {
-				delete(roomChat[room], client)
+				delete(worldChat[world], client)
 			}
 		}
 	}

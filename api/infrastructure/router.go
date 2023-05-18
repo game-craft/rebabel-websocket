@@ -25,7 +25,7 @@ func Init() {
 	e.DELETE("/user/:id", func(c echo.Context) error { return userController.Delete(c) })
 
 	// chat
-	e.GET("/room_chat/:roomId", func(c echo.Context) error { return chatController.RoomChat(c) })
+	e.GET("/room_chat/:worldsId", func(c echo.Context) error { return chatController.WorldChat(c) })
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
