@@ -10,4 +10,4 @@ CREATE TABLE `chats` (
 ALTER TABLE chats
 ADD CONSTRAINT fk_chats_worlds
 FOREIGN KEY (worlds_id)
-REFERENCES chats(id);
+REFERENCES worlds(id);
