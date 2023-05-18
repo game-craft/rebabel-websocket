@@ -1,7 +1,7 @@
 CREATE TABLE `chats` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `worlds_id` INT NOT NULL,
-    `chats_sentence` VARCHAR(255) NOT NULL,
+    `chats_content` VARCHAR(255) NOT NULL,
     `created_at` TIMESTAMP NOT NULL,
     `updated_at` TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`)
