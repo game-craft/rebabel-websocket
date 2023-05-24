@@ -11,7 +11,7 @@ COPY . .
 EXPOSE 8000
 
 RUN go mod init docker-echo-template && go mod tidy
-RUN apk upgrade --update && apk add bash && apk --no-cache add git
+RUN apk upgrade --update && apk add bash && apk add build-base && apk --no-cache add git
 RUN go install github.com/cosmtrek/air@latest
 RUN go install -tags mysql github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 RUN go get -u github.com/labstack/echo/v4@latest
