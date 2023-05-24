@@ -27,7 +27,7 @@ rebabel-websocket
  ├──migration(SQL, マイグレーション)
  |   ├──000001_create_example.up.sql
  |   └──000001_create_example.down.sql
- ├──test
+ ├──test(テストコード)
  ├──.air.toml
  ├──.env.example
  ├──.gitignore
@@ -57,4 +57,9 @@ migrate -database="mysql://root:root@tcp(host.docker.internal:3306)/rebabel-data
 5.サーバー(air)を起動
 ```
 air
+```
+## テスト
+1.テストを実行
+```
+go test -count=1 ./test/...
 ```
